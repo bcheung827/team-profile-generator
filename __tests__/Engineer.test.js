@@ -1,18 +1,19 @@
 const Engineer = require("../lib/Engineer");
 
-describe("Turtle", () => {
-    describe("getTurtles", () => {
-        it("shold set", () => {
-            const num = 2;
-            const t = new Turtle(num);
-            expect(t.num).toEqual(num);
-        });
+describe("Can set Github acc via constructor", () => {
+    const testValue = "GithubUser";
+    const t = new Engineer("Brandon", 1, "test@test.com", testValue);
+    expect(t.github).toBe(testValue);
+});
 
-        it("shold set", () => {
-            const num = 2;
-            const expected = 
-            const t = new Turtle(num);
-            expect(t.num).toEqual(num);
-        });
-    })
-})
+describe("getRole() should return \"Engineer\"", () => {
+    const testValue = "Engineer";
+    const t = new Engineer("Brandon", 1, "test@test.com", "githubUser");
+    expect(t.getRole).toBe(testValue);
+});
+
+describe("Can get school via getGithub()", () => {
+    const testValue = "GIthubUser";
+    const t = new Engineer("Brandon", 1, "test@test.com", testValue);
+    expect(t.getGithub).toBe(testValue);
+});

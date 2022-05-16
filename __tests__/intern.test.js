@@ -1,18 +1,19 @@
 const Intern = require("../lib/Intern");
 
-describe("Turtle", () => {
-    describe("getTurtles", () => {
-        it("shold set", () => {
-            const num = 2;
-            const t = new Turtle(num);
-            expect(t.num).toEqual(num);
-        });
+describe("Can set school via constructor", () => {
+    const testValue = "UPenn";
+    const t = new Intern("Brandon", 1, "test@test.com", testValue);
+    expect(t.school).toBe(testValue);
+});
 
-        it("shold set", () => {
-            const num = 2;
-            const expected = 
-            const t = new Turtle(num);
-            expect(t.num).toEqual(num);
-        });
-    })
-})
+describe("getRole() should return \"Intern\"", () => {
+    const testValue = "Intern";
+    const t = new Intern("Brandon", 1, "test@test.com", "UPenn");
+    expect(t.getRole).toBe(testValue);
+});
+
+describe("Can get school via getSchool()", () => {
+    const testValue = "UPenn";
+    const t = new Intern("Brandon", 1, "test@test.com", testValue);
+    expect(t.getSchool).toBe(testValue);
+});
