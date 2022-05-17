@@ -1,5 +1,94 @@
-const Turtle = require('./lib/Turtle')
+const inquirer = require("inquirer");
+const fs = require("fs");
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
+const path = require("path");
+const output_dir = path.resolve(__dirname, "output");
+const outputPath = path.join(output_dir, "team.html");
+const generateTeam = require('./src/template.js')
 
-const writer = require('./src/template');
+const employees = [];
 
-console.log(writer("Turtles Rock!", new Turtle(5).getTurtles()));
+function initApp() {
+    startHtml();
+    addMember();
+}
+
+function addMember() {
+    inquirer.prompt([{
+        type: "input",
+        message: "Enter employee's name",
+        name: "name",
+    },
+    {
+        type: "list",
+        message: "What is this employee's role",
+        choices: [
+            "Engineer",
+            "Intern",
+            "Manager"
+        ],
+        name: "role"
+    },
+    {
+        type: "input",
+        message: "Enter employee's id",
+        name: "id"
+    },
+    {
+        type: "input",
+        message: "Enter employee's email address",
+        name: "email"
+    }])
+
+        .then(function ({ name, role, id, email }) {
+            let roleInfo = "";
+            if (role === "Engineer") {
+                roleInfo = "Github username";
+            } else if (role === "Intern") {
+                roleInfo = "school name"
+            } else {
+                roleInfo = "office number";
+            }
+            inquirer.prompt([{
+                message: `Enter employee's ${roleInfo}`,
+                name: "roleInfo"
+            },
+            {
+                type: "list",
+                message: "Add another employee?",
+                choices: [
+                    "yes",
+                    "no"
+                ],
+                name: "additionalMembers"
+            }])
+                .then(function ({ roleInfo, additionalMembers }) {
+                    let additionalMember;
+                    if (role === "Engineer") {
+                        additionalMember = new Engineer(name, id, email, roleInfo);
+                    } else if (role === "Engineer") {
+                        additionalMember = new Intern(name, id, email, roleInfo);
+                    } else {
+                        additionalMember = new Manager(name, id, email, roleInfo);
+                    }
+                    employees.push(additionalMember);
+                    addHtml(additionalMember)
+                    .then(function() {
+                        if (moreMembers === "yes") {
+                            addMember();
+                        } else {
+                            finishHtml();
+                        }
+                    });
+                });
+        });
+}
+
+function startHtml() {
+    console.log("Team created")
+    fs.writeFileSync(outputPath, generateTeam, "UTF-8")
+}
+
+initApp();
