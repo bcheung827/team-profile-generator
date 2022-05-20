@@ -15,7 +15,9 @@
 
   ## Usage
   In the integrated terminal type node inquirer and a series of questions is asked, upon answering all questions the webpage is then generated
-
+  
+  View link here - [Screencastify](https://watch.screencastify.com/v/11fARBqQdvObPz5w7Rne)
+  
   ## Testing
   Install node.js and test functionality
 

@@ -68,27 +68,30 @@ function addMember() {
                     let additionalMember;
                     if (role === "Engineer") {
                         additionalMember = new Engineer(name, id, email, roleInfo);
+                        console.log(additionalMember)
                     } else if (role === "Engineer") {
                         additionalMember = new Intern(name, id, email, roleInfo);
+                        console.log(additionalMember)
                     } else {
                         additionalMember = new Manager(name, id, email, roleInfo);
+                        console.log(additionalMember)
                     }
                     employees.push(additionalMember);
-                    addHtml(additionalMember)
-                    .then(function() {
-                        if (moreMembers === "yes") {
+                 //  addHtml(additionalMember)
+                   // .then(function() {
+                        if (additionalMembers === "yes") {
                             addMember();
                         } else {
-                            finishHtml();
+                            startHtml();
                         }
-                    });
+                   // });
                 });
         });
 }
 
 function startHtml() {
     console.log("Team created")
-    fs.writeFileSync(outputPath, generateTeam, "UTF-8")
+    fs.writeFileSync(outputPath, generateTeam(employees), "UTF-8")
 }
 
 initApp();
